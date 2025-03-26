@@ -19,17 +19,17 @@ new_game = ConnectFourGame()
 Alternatively, leave now and never come back by typing:
 exit()""")
             return
-        if self._current_board[0][column_to_drop] != "_":
+        if self._current_board[0][column_to_drop-1] != "_":
             print("This column is full! Please pick another.")
             return
         else:
             last_free_slot = 0
             for i in range(1, 6):
-                if self._current_board[i][column_to_drop] != "_":
+                if self._current_board[i][column_to_drop-1] != "_":
                     break
                 else:
                     last_free_slot = i 
-        self.update_board(last_free_slot, column_to_drop)
+        self.update_board(last_free_slot, column_to_drop-1)
         self.increment_turn_counter()
         for row in self._current_board:
             print(row)
