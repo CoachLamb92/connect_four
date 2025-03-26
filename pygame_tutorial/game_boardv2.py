@@ -1,9 +1,11 @@
 import pygame
-
+from src.main import game_state
 from pygame.locals import *
 
 
-def game_board(width=800, height=800):
+def game_board(width=800, height=800, p1_name="", p2_name=""):
+    p1_name = "Player 1" if not p1_name else p1_name
+    p2_name = "Player 2" if not p2_name else p2_name
     pygame.init()
     board_state = [
             ["X", "X", "X", "_", "O", "O", "O"],    # row 0
@@ -35,7 +37,7 @@ def game_board(width=800, height=800):
     while gameOn:
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.key == K_BACKSPACE:
+                if event.key == K_ESCAPE:
                     gameOn = False
 
                 if event.key == K_1:
@@ -71,4 +73,4 @@ def game_board(width=800, height=800):
 
         pygame.display.update()
 
-game_board()
+# game_board()
