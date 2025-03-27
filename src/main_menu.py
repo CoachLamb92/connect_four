@@ -1,5 +1,5 @@
 import pygame
-from pygame.locals import KEYDOWN, K_ESCAPE
+from pygame.locals import KEYDOWN, K_ESCAPE, MOUSEBUTTONDOWN, K_BACKSPACE
 from game_board import game_board
 
 
@@ -58,25 +58,25 @@ def main_menu():
                     pygame.quit()
 
             # select player name input boxes
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN:
                 if p1_input_rect.collidepoint(event.pos):
                     p1_active = True
-            else:
-                p1_active = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
+                else:
+                    p1_active = False
+            if event.type == MOUSEBUTTONDOWN:
                 if p2_input_rect.collidepoint(event.pos):
                     p2_active = True
                 else:
                     p2_active = False
 
             # enter text into player name input boxes
-            if p1_active and event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
+            if p1_active and event.type == KEYDOWN:
+                if event.key == K_BACKSPACE:
                     p1_name = p1_name[:-1]
                 else:
                     p1_name += event.unicode
-            if p2_active and event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_BACKSPACE:
+            if p2_active and event.type == KEYDOWN:
+                if event.key == K_BACKSPACE:
                     p2_name = p2_name[:-1]
                 else:
                     p2_name += event.unicode
@@ -85,7 +85,7 @@ def main_menu():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN:
                 if start_button_rect.collidepoint(event.pos):
                     game_board(width, height, p1_name, p2_name)
                     pygame.quit()

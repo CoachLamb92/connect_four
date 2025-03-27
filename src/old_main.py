@@ -22,4 +22,4 @@ def game_state(p1, p2):
     print(f"{current_player} won the game!")
 
 
-# game_state()
+# game_state() test text
