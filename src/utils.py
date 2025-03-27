@@ -28,7 +28,7 @@ exit()""")
                 if self._current_board[i][column_to_drop-1] != "_":
                     break
                 else:
-                    last_free_slot = i 
+                    last_free_slot = i
         self.update_board(last_free_slot, column_to_drop-1)
         self.increment_turn_counter()
         for row in self._current_board:
@@ -53,7 +53,7 @@ exit()""")
 
     def get_player(self):
         return "X" if self.get_turn_count() % 2 == 1 else "O"
-    
+
     def check_winner(self):
         rows = 6
         columns = 7
@@ -66,7 +66,7 @@ exit()""")
                     return "X"
                 elif self._current_board[i][j:j+4] == o_win:
                     return "O"
-                
+
         # column check
         for i in range(columns):
             for j in range(rows-3):
@@ -76,14 +76,15 @@ exit()""")
                     return "X"
                 elif check_list == o_win:
                     return "O"
-                
+
         # positive correlation diagonal check
         for i in range(rows):
             for j in range(columns):
                 if self._current_board[i][j] == "_":
                     continue
                 try:
-                    check_list = [self._current_board[i+n][j+n] for n in range(4)]
+                    check_list = [self._current_board[i+n][j+n]
+                                  for n in range(4)]
                     if check_list == x_win:
                         return "X"
                     elif check_list == o_win:
@@ -92,7 +93,8 @@ exit()""")
                         raise Exception
                 except Exception:
                     try:
-                        check_list = [self._current_board[i+n][j-n] for n in range(4)]
+                        check_list = [self._current_board[i+n][j-n]
+                                      for n in range(4)]
                         if check_list == x_win:
                             return "X"
                         elif check_list == o_win:
@@ -100,4 +102,3 @@ exit()""")
                     except Exception:
                         continue
         return False
-      

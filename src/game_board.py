@@ -1,5 +1,6 @@
 import pygame
-from pygame.locals import *
+from pygame.locals import K_1, K_2, K_3, K_4, K_5, K_6, K_7
+from pygame.locals import KEYDOWN, K_ESCAPE, QUIT
 from src.utils import ConnectFourGame
 
 
@@ -19,7 +20,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
     top_left_x = (width-board_width)//2
     top_left_y = (height-board_height)//2
     board = pygame.Rect(top_left_x, top_left_y, board_width, board_height)
-    
+
     game_text_rect = pygame.Rect(board.x, 20, board_width, top_left_y-30)
 
     # colours
@@ -30,7 +31,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
     muted_blue = (0, 0, 200)
 
     # fonts
-    smallfont = pygame.font.SysFont('Corbel',35)
+    smallfont = pygame.font.SysFont('Corbel', 35)
 
     # texts
     p1_text = f'{p1_name}, it\'s your turn! (you are red)'
@@ -72,7 +73,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
                     print("Please enter 1-7 to select the corresponding row")
             elif event.type == QUIT:
                 gameOn = False
-        
+
         pygame.draw.rect(screen, muted_blue, board)
         for i in range(len(board_state)):
             for j in range(len(board_state[i])):
@@ -84,14 +85,16 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
                     circle_colour = muted_red
                 else:
                     circle_colour = muted_yellow
-                pygame.draw.circle(screen, circle_colour, (x_coord, y_coord), magic_pixel_size)
+                pygame.draw.circle(screen, circle_colour,
+                                   (x_coord, y_coord), magic_pixel_size)
 
         result = new_game.check_winner()
         if result == 'X':
-            narrator_text = smallfont.render(f'{p1_name} wins! Press Esc to exit', True, white)
+            narrator_text = smallfont.render(
+                f'{p1_name} wins! Press Esc to exit', True, white)
         elif result == 'O':
-            narrator_text = smallfont.render(f'{p2_name} wins! Press Esc to exit', True, white)
-
+            narrator_text = smallfont.render(
+                f'{p2_name} wins! Press Esc to exit', True, white)
 
         pygame.draw.rect(screen, muted_blue, game_text_rect)
         screen.blit(narrator_text, (game_text_rect.x+7, game_text_rect.y+7))

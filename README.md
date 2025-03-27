@@ -7,6 +7,7 @@
     - pip install pygame
 
 ## Afterwards, ensure you are in the root of this directory, then execute the line below to start the game
+    - export PYTHONPATH=$(pwd)
     - python src/main_menu.py
 
 Once the game has started, use the keys 1-7 to enter your token in the desired column.
