@@ -102,3 +102,14 @@ exit()""")
                     except Exception:
                         continue
         return False
+
+    def available_slots(self):
+        slots = [str(i+1) for i in range(len(
+            self._current_board[0])) if self._current_board[0][i] == '_']
+        if len(slots) > 1:
+            output = ', '.join(slots[:-1]) + " or " + slots[-1]
+        elif len(slots) == 1:
+            output = slots[0]
+        else:
+            output = "draw"
+        return output

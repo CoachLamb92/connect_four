@@ -13,7 +13,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
 
     # Board-making maths
     units_per_width = (width-20)//22
-    units_per_height = (height-20)//19
+    units_per_height = (height-40)//19
     magic_pixel_size = min([units_per_width, units_per_height])
     board_height = magic_pixel_size * 19
     board_width = magic_pixel_size * 22
@@ -21,7 +21,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
     top_left_y = (height-board_height)//2
     board = pygame.Rect(top_left_x, top_left_y, board_width, board_height)
 
-    game_text_rect = pygame.Rect(board.x, 20, board_width, top_left_y-30)
+    game_text_rect = pygame.Rect(board.x, 0, board_width, 70)
 
     # colours
     white = (255, 255, 255)
@@ -71,6 +71,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
                         narrator_text = smallfont.render(p2_text, True, white)
                 else:
                     print("Please enter 1-7 to select the corresponding row")
+                    print(reminder_text)
             elif event.type == QUIT:
                 gameOn = False
 
@@ -88,6 +89,7 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
                 pygame.draw.circle(screen, circle_colour,
                                    (x_coord, y_coord), magic_pixel_size)
 
+        # Check winner of the match
         result = new_game.check_winner()
         if result == 'X':
             narrator_text = smallfont.render(
@@ -95,7 +97,20 @@ def game_board(width=800, height=800, p1_name="", p2_name=""):
         elif result == 'O':
             narrator_text = smallfont.render(
                 f'{p2_name} wins! Press Esc to exit', True, white)
+        
+        # Check which columns are left:
+        result_2 = new_game.available_slots()
+        if result_2 == 'draw':
+            narrator_text = smallfont.render(
+                f'A draw!!', True, white)
+            reminder_text = smallfont.render(
+                'Play again to discover who is the best!', True, white)
+        else:
+            reminder_text = smallfont.render(
+                'Please choose from columns: ' + result_2, True, white)
+
 
         pygame.draw.rect(screen, muted_blue, game_text_rect)
         screen.blit(narrator_text, (game_text_rect.x+7, game_text_rect.y+7))
+        screen.blit(reminder_text, (game_text_rect.x+7, game_text_rect.y+42))
         pygame.display.update()
