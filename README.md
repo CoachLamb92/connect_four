@@ -7,6 +7,7 @@
     - pip install pygame
 
 ## Afterwards, ensure you are in the root of this directory, then execute the line below to start the game
+    - source venv/bin/activate
     - export PYTHONPATH=$(pwd)
     - python src/main_menu.py
 

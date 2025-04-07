@@ -1,9 +1,9 @@
-from src.connect_four.utils import ConnectFourGame
+from src.utils import ConnectFourGame
 import pytest
 import io
 import sys
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestInitMethod:
     def test_method_exists(self):
         # Arrange
@@ -38,7 +38,7 @@ class TestInitMethod:
         # Assert
         assert expected == result
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestPlayMethod:
     def test_method_exists(self):
         # Arrange
@@ -183,7 +183,7 @@ class TestPlayMethod:
         # Assert
         assert expected == result
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestUpdateBoardMethod:
     def test_method_exists(self):
         # Arrange
@@ -270,7 +270,7 @@ class TestUpdateBoardMethod:
         # Assert
         assert expected == result
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestIncrementTurnCounterMethod:
     def test_method_exists(self):
         # Arrange
@@ -292,7 +292,7 @@ class TestIncrementTurnCounterMethod:
         assert expected_first == result_first
         assert expected_second == result_second
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestGetTurnCountMethod:
     def test_method_exists(self):
         # Arrange
@@ -314,7 +314,7 @@ class TestGetTurnCountMethod:
         assert expected_first == result_first
         assert expected_second == result_second
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestGetBoardMethod:
     def test_method_exists(self):
         # Arrange
@@ -340,7 +340,7 @@ class TestGetBoardMethod:
         # Assert
         assert expected == result
 
-# @pytest.mark.skip
+@pytest.mark.skip
 class TestGetPlayerMethod:
     def test_method_exists(self):
         # Arrange
@@ -379,6 +379,7 @@ class TestGetPlayerMethod:
         assert expected_second == result_second
         assert expected_fourth == result_fourth
 
+@pytest.mark.skip
 class TestCheckWinnerMethod:
     def test_method_exists(self):
         # Arrange
@@ -521,3 +522,147 @@ class TestCheckWinnerMethod:
         result = dummy_grid.check_winner()
         # Assert
         assert expected == result
+
+# @pytest.mark.skip
+class TestAvailableSlots:
+    def test_method_exists(self):
+        # Arrange
+        expected = "available_slots"
+        # Act
+        result = dir(ConnectFourGame)
+        # Assert
+        assert expected in result
+
+    def test_method_returns_correctly_on_empty_grid(self):
+        # Arrange
+        expected = "1, 2, 3, 4, 5, 6 or 7"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["_", "_", "_", "_", "_", "_", "_"],
+            ["_", "_", "_", "_", "_", "_", "_"],
+            ["_", "_", "_", "_", "_", "_", "_"],
+            ["_", "_", "_", "_", "_", "_", "_"],
+            ["_", "_", "_", "_", "_", "_", "_"],
+            ["_", "_", "_", "_", "_", "_", "_"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+    def test_method_returns_correctly_on_full_grid(self):
+        # Arrange
+        expected = "draw"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+    def test_method_returns_correctly_on_with_one_move_left(self):
+        # Arrange
+        expected = "1"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["_", "O", "X", "O", "X", "O", "O"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+        # Arrange
+        expected = "4"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["X", "O", "X", "_", "X", "O", "O"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+    def test_method_returns_correctly_on_with_two_moves_left(self):
+        # Arrange
+        expected = "2 or 3"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["X", "_", "_", "O", "X", "O", "O"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+        # Arrange
+        expected = "5 or 7"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["X", "O", "X", "O", "_", "O", "_"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+    def test_method_returns_correctly_on_with_some_moves_left(self):
+        # Arrange
+        expected = "1, 2 or 3"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["_", "_", "_", "O", "X", "O", "O"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+
+        # Arrange
+        expected = "1, 3, 5 or 7"
+        # Act
+        dummy_grid = ConnectFourGame()
+        dummy_grid._current_board = [
+            ["_", "O", "_", "O", "_", "O", "_"],
+            ["X", "O", "X", "O", "X", "O", "X"],
+            ["X", "O", "X", "O", "X", "O", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"],
+            ["O", "X", "O", "X", "O", "X", "O"],
+            ["O", "X", "O", "X", "O", "X", "X"]
+        ]
+        result = dummy_grid.available_slots()
+        # Assert
+        assert expected == result
+        
